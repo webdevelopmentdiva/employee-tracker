@@ -5,10 +5,110 @@ const cTable = require("console.table");
 
 const connection = mysql.createConnection({
   host: "localhost",
+  port: 3306,
   user: "root",
   password: "",
   database: "employee_trackerDB",
 });
+
+connection.connect(function (err) {
+  if (err) {
+    console.error("Error connecting: " + err.stack);
+    return;
+  }
+  frontAction();
+});
+
+function frontAction() {
+  inquirer.prompt(frontPrompt).then(function (answer) {
+    executeFunctions(answer.action);
+  });
+}
+
+const frontPrompt = {
+  type: "list",
+  name: "action",
+  message: "What would you like to do?",
+  choices: [
+    //View all Employees by Department
+    "View All Employees",
+    "View All Departments",
+    "View all Roles",
+    //Add Employee
+    "Add Employee",
+    //Remove Employee Role
+    "Update Employee Role",
+    "Update Employee Manager",
+    //Add Department
+    "Add Department",
+    //Add Role
+    "Add Role",
+  ],
+};
+
+function executeFunctions(action) {
+  switch (action) {
+    case "View All Employees":
+      viewTable("employee");
+      break;
+
+    case "View All Departments":
+      viewTable("department");
+      break;
+
+    case "View All Roles":
+      viewTable("role");
+      break;
+
+    case "Add Employee":
+      addEmployee();
+      break;
+
+    case "Update Employee Role":
+      updateEmployeeRole();
+      break;
+
+    case "Update Employee Manager":
+      updateEmployeeManager();
+      break;
+
+    case "Add Department":
+      addDepartment();
+      break;
+
+    case "Add Role":
+      addRole();
+      break;
+  }
+}
+
+function viewTables(name) {
+  let queryEmployee =
+    'SELECT e.id, e.first_name, e.last_name, role.title, department.name AS "department", role.salary, concat(m.first_name,"",m.last_name) AS "manager" FROM employee AS e LEFT JOIN employee AS m ON m.id = e.manager_id INNER JOIN role ON e.role_id = role.id INNER JOIN department ON role.department_id = department.id';
+  let queryDepartment = "SELECT * FROM department";
+  let queryRole =
+    "SELECT role.id, role.title, role.salary. department.name FROM role INNER JOIN department ON role.department_id = department.id";
+
+  let query = "";
+
+  switch (name) {
+    case "employee":
+      query = queryEmployee;
+      break;
+    case "department":
+      query = queryDepartment;
+      break;
+    case "role":
+      query = queryRole;
+      break;
+  }
+  connection.query(query, function (err, res) {
+    console.table(res);
+    frontAction();
+  });
+}
+
+/*
 
 connection.connect();
 connection.query = util.promisify(connection.query);
@@ -249,3 +349,4 @@ async function init() {
 }
 
 init();
+*/

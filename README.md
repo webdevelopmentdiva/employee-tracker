@@ -2,6 +2,8 @@
 
 ## I've created an interface that makes it easy for non-developers to view and interact with information stored in databases. A solution for managing a company's employees using node, inquirer, and MySQL.
 
+![employee-tracker](https://user-images.githubusercontent.com/63182837/84457220-f3eee880-ac16-11ea-98b3-018c4c48e983.gif)
+
 ### A command-line application that allows the user to:
 
 - Add departments, roles, employees
@@ -38,16 +40,11 @@ Here are some guidelines on how do I delivered this:
 
 - Used the [MySQL](https://www.npmjs.com/package/mysql) NPM package to connect to MySQL database and perform queries.
 - Used [InquirerJs](https://www.npmjs.com/package/inquirer/v/0.2.3) NPM package to interact with the user via the command-line.
-- Used [console.table](https://www.npmjs.com/package/console.table) to print MySQL rows to the console. There is a built-in version of `console.table`, but the NPM package formats the data a little better for our purposes.
+- Used [console.table](https://www.npmjs.com/package/console.table) to print MySQL rows to the console.
 - I made a separate file containing functions for performing specific SQL queries to use.
-- I performed a variety of SQL JOINS to complete this assignment. ![Employee Tracker](Assets/employee-tracker.gif)
-
 - I included a `employee.sql` file to pre-populate my database.
 
-## Minimum Requirements
-
-- GitHub repository with a unique name and a README describing the project.
-- The command-line application should allow users to:
-- Add departments, roles, employees
-- View departments, roles, employees
-- Update employee roles
+* The command-line application allows users to:
+* Add departments, roles, employees //commented out .. not working
+* View departments, roles, employees //done
+* Update employee roles //commented out .. not working

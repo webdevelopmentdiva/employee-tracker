@@ -16,11 +16,13 @@ connection.connect(function (err) {
   }
   functionAction();
 });
+//inquire the user and then execute the function
 function functionAction() {
   inquirer.prompt(frontPrompt).then(function (answers) {
     executeFunctions(answers.action);
   });
 }
+//prompt the user with the question
 const frontPrompt = {
   type: "list",
   name: "action",
@@ -35,15 +37,16 @@ const frontPrompt = {
     "Add Role",
   ],
 };
+//execute the functions to the choice of the user
 function executeFunctions(action) {
   switch (action) {
-    case "View Employee":
+    case "View Employees":
       viewTable("employee");
       break;
     case "View Departments":
       viewTable("department");
       break;
-    case "View Role":
+    case "View Roles":
       viewTable("roles");
       break;
     case "Add Employee":
@@ -60,6 +63,7 @@ function executeFunctions(action) {
       break;
   }
 }
+//select and pull the information for each variable
 function viewTable(name) {
   let queryEmployee =
     'SELECT e.id, e.first_name, e.last_name, role.title, department.name AS "department", role.salary, CONCAT(m.first_name,"",m.last_name) AS "manager" FROM employee AS e LEFT JOIN employee AS m ON m.id = e.manager_id INNER JOIN role ON e.role_id = role.id INNER JOIN department ON role.department_id = department.id';
@@ -70,6 +74,7 @@ function viewTable(name) {
   let queryupdateEmployee = "SELECT * FROM department";
   let queryaddRole = "SELECT * FROM department";
   let query = "";
+  //if you pick ... then we're going to view ... table ... next function
   switch (name) {
     case "Employee":
       query = queryEmployee;

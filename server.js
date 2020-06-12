@@ -50,6 +50,7 @@ function executeFunctions(action) {
   switch (action) {
     case "View All Employees":
       viewTable("employee");
+      u5;
       break;
 
     case "View All Departments":

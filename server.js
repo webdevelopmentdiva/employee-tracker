@@ -2,7 +2,6 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 const util = require("util");
 const cTable = require("console.table");
-
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -10,103 +9,97 @@ const connection = mysql.createConnection({
   password: "",
   database: "employee_trackerDB",
 });
-
 connection.connect(function (err) {
   if (err) {
-    console.error("Error connecting: " + err.stack);
+    console.error("Error" + err.stack);
     return;
   }
-  frontAction();
+  functionAction();
 });
-
-function frontAction() {
-  inquirer.prompt(frontPrompt).then(function (answer) {
-    executeFunctions(answer.action);
+function functionAction() {
+  inquirer.prompt(frontPrompt).then(function (answers) {
+    executeFunctions(answers.action);
   });
 }
-
 const frontPrompt = {
   type: "list",
   name: "action",
-  message: "What would you like to do?",
+  message: "What what would you like to do?",
   choices: [
-    //View all Employees by Department
-    "View All Employees",
-    "View All Departments",
-    "View all Roles",
-    //Add Employee
+    "View Departments",
+    "View Roles",
+    "View Employees",
     "Add Employee",
-    //Remove Employee Role
     "Update Employee Role",
-    "Update Employee Manager",
-    //Add Department
     "Add Department",
-    //Add Role
     "Add Role",
   ],
 };
-
 function executeFunctions(action) {
   switch (action) {
-    case "View All Employees":
+    case "View Employee":
       viewTable("employee");
-      u5;
       break;
-
-    case "View All Departments":
+    case "View Departments":
       viewTable("department");
       break;
-
-    case "View All Roles":
-      viewTable("role");
+    case "View Role":
+      viewTable("roles");
       break;
-
     case "Add Employee":
-      addEmployee();
+      viewTable("addEmployee");
       break;
-
     case "Update Employee Role":
-      updateEmployeeRole();
+      viewTable("updateEmployee");
       break;
-
-    case "Update Employee Manager":
-      updateEmployeeManager();
-      break;
-
     case "Add Department":
-      addDepartment();
+      viewTable("addDepartment");
       break;
-
     case "Add Role":
-      addRole();
+      viewTable("addRole");
       break;
   }
 }
-
-function viewTables(name) {
+function viewTable(name) {
   let queryEmployee =
-    'SELECT e.id, e.first_name, e.last_name, role.title, department.name AS "department", role.salary, concat(m.first_name,"",m.last_name) AS "manager" FROM employee AS e LEFT JOIN employee AS m ON m.id = e.manager_id INNER JOIN role ON e.role_id = role.id INNER JOIN department ON role.department_id = department.id';
+    'SELECT e.id, e.first_name, e.last_name, role.title, department.name AS "department", role.salary, CONCAT(m.first_name,"",m.last_name) AS "manager" FROM employee AS e LEFT JOIN employee AS m ON m.id = e.manager_id INNER JOIN role ON e.role_id = role.id INNER JOIN department ON role.department_id = department.id';
   let queryDepartment = "SELECT * FROM department";
   let queryRole =
-    "SELECT role.id, role.title, role.salary. department.name FROM role INNER JOIN department ON role.department_id = department.id";
-
+    "SELECT role.id, role.title, role.salary, department.name FROM role INNER JOIN department ON role.department_id = department.id";
+  let queryaddEmployee = "SELECT * FROM department";
+  let queryupdateEmployee = "SELECT * FROM department";
+  let queryaddRole = "SELECT * FROM department";
   let query = "";
-
   switch (name) {
-    case "employee":
+    case "Employee":
       query = queryEmployee;
+      viewTable(name);
       break;
-    case "department":
+    case "Department":
       query = queryDepartment;
+      viewTable(name);
       break;
-    case "role":
+    case "Roles":
       query = queryRole;
+      viewTable(name);
+      break;
+    case "Add Employee":
+      query = queryaddEmployee;
+      viewTable(name);
+      break;
+    case "Update Employee Role":
+      query = updateEmployee;
+      viewTable(name);
+      break;
+    case "Add Department":
+      query = addDepartment;
+      viewTable(name);
+      break;
+    case "Add Role":
+      query = addRole;
+      viewTable(name);
       break;
   }
-  connection.query(query, function (err, res) {
-    console.table(res);
-    frontAction();
-  });
 }
 
 /*

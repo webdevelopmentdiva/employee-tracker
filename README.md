@@ -1,10 +1,10 @@
 # Employee-Tracker
 
-## I've created an interface that makes it easy for non-developers to view and interact with information stored in databases. A solution for managing a company's employees using node, inquirer, and MySQL.
+## I've created an interface that makes it easy for non-developers to view and interact with information stored in databases. Its a solution for managing a company's employees using node, inquirer, and MySQL.
 
 ![employee-tracker](https://user-images.githubusercontent.com/63182837/84457220-f3eee880-ac16-11ea-98b3-018c4c48e983.gif)
 
-### A command-line application that allows the user to:
+### The command-line application allows the user to:
 
 - Add departments, roles, employees
 - View departments, roles, employees
@@ -45,6 +45,6 @@ Here are some guidelines on how do I delivered this:
 - I included a `employee.sql` file to pre-populate my database.
 
 * The command-line application allows users to:
-* Add departments, roles, employees //commented out .. not working
-* View departments, roles, employees //done
-* Update employee roles //commented out .. not working
+* Add departments, roles, employees
+* View departments, roles, employees
+* Update employee roles
